@@ -1,18 +1,11 @@
-// Student-Manage-System
-// 学生管理系统
+// Student Manage System// 学生管理系统
 // -----10--------20--------30--------40--------50--------60--------70--------80
-
-// 标准库头文件
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <windows.h>
 
 // C:\download\a.txt
 // 学号  姓名  性别  宿舍号码  电话号码
-// 01  张成成  男  501  87732111
-// 02  李成华  女  101  87723112
-// 03  雷石东  男  502  87732113
+// 01  依古比古  男  501  87732111
+// 02  唔西迪西  女  101  87723112
+// 03  玛卡巴卡  男  502  87732113
 
 // C:\download\b.txt
 //学号  课程编号  课程名称  学分  平时成绩  实验成绩 考试成绩
@@ -26,8 +19,15 @@
 //03  A01  大学数学  5  94  97  92
 //03  A03  大学英语  3  92  96  92
 
+// 标准库头文件
+#include <conio.h>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <windows.h>
+
 // 忽略 strcpy 问题
-#pragma warning( disable : 4996)
+#pragma warning(disable: 4996)
 
 // 命名空间
 using namespace std;
@@ -187,6 +187,7 @@ private:
   const char *DIR_A = "C:\\download\\a.txt";
   const char *DIR_B = "C:\\download\\b.txt";
 };
+// 用户函数
 void Manager::getStu()
 {
   string tmp;
@@ -322,44 +323,44 @@ void Manager::getCou()
           ctmpb[j] = ctmp;
         }
       }
-    switch (ipt-'0')
+    switch (ipt - '0')
     {
-      case 1:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = 0; i < ctcount; i++)
-          cout << ctmpa[i] << endl;
-        back();
-      }
-      break;
-      case 2:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = ctcount - 1; i >= 0; i--)
-          cout << ctmpa[i] << endl;
-        back();
-      }
-      break;
-      case 3:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = 0; i < ctcount; i++)
-          cout << ctmpb[i] << endl;
-        back();
-      }
-      break;
-      case 4:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = ctcount - 1; i >= 0; i--)
-          cout << ctmpb[i] << endl;
-        back();
-      }
-      break;
-      default:
-      {
-        back(); 
-      }
+    case 1:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = 0; i < ctcount; i++)
+        cout << ctmpa[i] << endl;
+      back();
+    }
+    break;
+    case 2:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = ctcount - 1; i >= 0; i--)
+        cout << ctmpa[i] << endl;
+      back();
+    }
+    break;
+    case 3:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = 0; i < ctcount; i++)
+        cout << ctmpb[i] << endl;
+      back();
+    }
+    break;
+    case 4:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = ctcount - 1; i >= 0; i--)
+        cout << ctmpb[i] << endl;
+      back();
+    }
+    break;
+    default:
+    {
+      back();
+    }
     }
   }
 }
@@ -399,7 +400,7 @@ void Manager::delCou()
   if (search(tmp1) != -1024)
   {
     int i = 0;
-    for (; i < ccount;i++)
+    for (; i < ccount; i++)
       if (mca[i].getcsid() == tmp1 && mca[i].getccid() == tmp2)
       {
         cout << mca[i] << "  已删除！";
@@ -576,37 +577,42 @@ void Manager::index()
     char ipt;
     cout << "请选择：";
     cin >> ipt;
-    switch (ipt-'0')
+    switch (ipt - '0')
     {
-      case 0: over(); break;
-      case 1: getStu(); break;
-      case 2: addStu(); break;
-      case 3: delStu(); break;
-      case 4: getCou(); break;
-      case 5: addCou(); break;
-      case 6: delCou(); break;
-      default: {cout << "请重新输入" << endl; index(); }
+    case 0: over(); break;
+    case 1: getStu(); break;
+    case 2: addStu(); break;
+    case 3: delStu(); break;
+    case 4: getCou(); break;
+    case 5: addCou(); break;
+    case 6: delCou(); break;
+    default: {cout << "请重新输入" << endl; index(); }
     }
   }
 }
 void Manager::login()
 {
-  string ipt, ipt_;
+  char ch[3];
   cout << "您未登录请先登录，\n";
   for (int i = 3, j = 0; i > 0; i--)
   {
     cout << "请输入密码：";
-    cin >> ipt;
-    if (ipt == "ipt")
+    while ((ch[j] = toupper(getch())) != '\r')
+    {
+      cout << "*";
+      j++;
+
+    }
+    if (ch[0] == 'I' && ch[1] == 'P' && ch[2] == 'T')
     {
       opf = 1;
-      cout << "登录成功！" << endl;
+      cout << endl << "登录成功！" << endl;
       getFile();
       index();
     }
     else
     {
-      cout << "密码错误，还有" << i -1 << "次机会" << endl;
+      cout << "密码错误，还有" << i - 1 << "次机会" << endl;
     }
   }
 }
