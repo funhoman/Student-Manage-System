@@ -1,11 +1,11 @@
-// Student Manage System// 学生管理系统
+// 学生管理系统
 // -----10--------20--------30--------40--------50--------60--------70--------80
 
 // C:\download\a.txt
 // 学号  姓名  性别  宿舍号码  电话号码
-// 01  依古比古  男  501  87732111
-// 02  唔西迪西  女  101  87723112
-// 03  玛卡巴卡  男  502  87732113
+// 01  张成成  男  501  87732111
+// 02  李成华  女  101  87723112
+// 03  雷石东  男  502  87732113
 
 // C:\download\b.txt
 //学号  课程编号  课程名称  学分  平时成绩  实验成绩 考试成绩
@@ -183,6 +183,8 @@ private:
   int ccount;
   Student *msa;
   Course *mca;
+  Student msa0;
+  Course mca0;
   int opf;
   const char *DIR_A = "C:\\download\\a.txt";
   const char *DIR_B = "C:\\download\\b.txt";
@@ -239,14 +241,13 @@ void Manager::delStu()
     if (toupper(ipt) == 'Y')
     {
       // 删除基本信息
-      msa[search(tmp)] = msa[0];
+      msa[search(tmp)] = msa0;
       scount--;
       // 删除成绩信息
       for (int i = 0; i < ccount; i++)
         if (mca[i].getcsid() == tmp)
         {
-          i++;
-          mca[ccount] = mca[i];
+          mca[i] = mca0;
           ccount--;
         }
     }
@@ -404,7 +405,7 @@ void Manager::delCou()
       if (mca[i].getcsid() == tmp1 && mca[i].getccid() == tmp2)
       {
         cout << mca[i] << "  已删除！";
-        mca[ccount] = mca[i];
+        mca[i] = mca0;
         ccount--;
         back();
       }
@@ -432,8 +433,8 @@ Manager::Manager(int s, int c)
 }
 Manager::~Manager()
 {
-  delete[]msa;
-  delete[]mca;
+  delete[] msa;
+  delete[] mca;
 }
 void Manager::back()
 {
@@ -463,7 +464,7 @@ void Manager::getFile()
     msa[i].setsdorm(dorm);
     msa[i].setstel(tel);
   }
-  scount = i;
+  scount = i - 1; // 多读一个换行符
   ifs.close();
   // 文件 B
   ifs.open(DIR_B);
@@ -495,7 +496,7 @@ void Manager::getFile()
     else
       mca[i].setcpoint(0);
   }
-  ccount = i;
+  ccount = i - 1; // 多读一个换行符
   ifs.close();
   cout << "加载完成";
 }
@@ -612,7 +613,8 @@ void Manager::login()
     }
     else
     {
-      cout << "密码错误，还有" << i - 1 << "次机会" << endl;
+      cout << "密码错误" << endl;
+      over();
     }
   }
 }
