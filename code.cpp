@@ -3,30 +3,32 @@
 
 // C:\download\a.txt
 // 学号  姓名  性别  宿舍号码  电话号码
-// 01  张成成  男  501  87732111
-// 02  李成华  女  101  87723112
-// 03  雷石东  男  502  87732113
+// 01  依古比古  男  501  87732111
+// 02  唔西迪西  女  101  87723112
+// 03  玛卡巴卡  男  502  87732113
+//
 
 // C:\download\b.txt
-//学号  课程编号  课程名称  学分  平时成绩  实验成绩 考试成绩
-//01  A02  大学物理  3  92  72  82
-//01  A01  大学数学  5  91  71  81
-//01  A03  大学英语  3  93  73  83
-//02  A02  大学物理  3  82  62  72
-//02  A01  大学数学  5  81  61  71
-//02  A03  大学英语  3  83  63  73
-//03  A02  大学物理  3  93  96  91
-//03  A01  大学数学  5  94  97  92
-//03  A03  大学英语  3  92  96  92
+// 学号  课程编号  课程名称  学分  平时成绩  实验成绩 考试成绩
+// 01  A02  大学物理  3  92  72  82
+// 01  A01  大学数学  5  91  71  81
+// 01  A03  大学英语  3  93  73  83
+// 02  A02  大学物理  3  82  62  72
+// 02  A01  大学数学  5  81  61  71
+// 02  A03  大学英语  3  83  63  73
+// 03  A02  大学物理  3  93  96  91
+// 03  A01  大学数学  5  94  97  92
+// 03  A03  大学英语  3  92  96  92
+//
 
-// 标准库头文件
+// 头文件
 #include <conio.h>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <windows.h>
 
-// 忽略 strcpy 问题
+// 忽略字符问题
 #pragma warning(disable: 4996)
 
 // 命名空间
@@ -326,42 +328,42 @@ void Manager::getCou()
       }
     switch (ipt - '0')
     {
-    case 1:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = 0; i < ctcount; i++)
-        cout << ctmpa[i] << endl;
-      back();
-    }
-    break;
-    case 2:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = ctcount - 1; i >= 0; i--)
-        cout << ctmpa[i] << endl;
-      back();
-    }
-    break;
-    case 3:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = 0; i < ctcount; i++)
-        cout << ctmpb[i] << endl;
-      back();
-    }
-    break;
-    case 4:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = ctcount - 1; i >= 0; i--)
-        cout << ctmpb[i] << endl;
-      back();
-    }
-    break;
-    default:
-    {
-      back();
-    }
+      case 1:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = 0; i < ctcount; i++)
+          cout << ctmpa[i] << endl;
+        back();
+      }
+      break;
+      case 2:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = ctcount - 1; i >= 0; i--)
+          cout << ctmpa[i] << endl;
+        back();
+      }
+      break;
+      case 3:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = 0; i < ctcount; i++)
+          cout << ctmpb[i] << endl;
+        back();
+      }
+      break;
+      case 4:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = ctcount - 1; i >= 0; i--)
+          cout << ctmpb[i] << endl;
+        back();
+      }
+      break;
+      default:
+      {
+        back();
+      }
     }
   }
 }
@@ -486,7 +488,7 @@ void Manager::getFile()
     mca[i].setcus(atoi(us.c_str()));
     mca[i].setcexp(atoi(exp.c_str()));
     mca[i].setctest(atoi(test.c_str()));
-    // csum 和 cpoint 由程序得出
+    // csum 和 cpoint 由程序计算
     if (mca[i].getcexp() == -1)
       mca[i].setcsum(0.3 * mca[i].getcus() + 0.7 * mca[i].getctest());
     else
@@ -511,7 +513,7 @@ void Manager::toFile()
     back();
   }
   ofs << "学号  姓名  性别  宿舍号码  电话号码" << endl;
-  for (int i = 0; i < scount; i++)
+  for (int i = 0; i <= scount; i++)
   {
     ofs << msa[i].getssid();
     ofs << "  ";
@@ -533,7 +535,7 @@ void Manager::toFile()
     back();
   }
   ofs << "学号  课程编号  课程名称  学分  平时成绩  实验成绩 考试成绩" << endl;
-  for (int i = 0; i < ccount; i++)
+  for (int i = 0; i <= ccount; i++)
   {
     ofs << mca[i].getcsid();
     ofs << "  ";
@@ -541,14 +543,22 @@ void Manager::toFile()
     ofs << "  ";
     ofs << mca[i].getcname();
     ofs << "  ";
-    ofs << mca[i].getccredit();
-    ofs << "  ";
-    ofs << mca[i].getcus();
-    ofs << "  ";
-    ofs << mca[i].getcexp();
-    ofs << "  ";
-    ofs << mca[i].getctest();
-    ofs << endl;
+    if (mca[i].getccredit() == 0 || mca[i].getccredit() == 0)
+    {
+      ofs << "  ";
+      ofs << endl;
+    }
+    else
+    {
+      ofs << mca[i].getccredit();
+      ofs << "  ";
+      ofs << mca[i].getcus();
+      ofs << "  ";
+      ofs << mca[i].getcexp();
+      ofs << "  ";
+      ofs << mca[i].getctest();
+      ofs << endl;
+    }
   }
   ofs.close();
   cout << "退出成功";
@@ -580,14 +590,14 @@ void Manager::index()
     cin >> ipt;
     switch (ipt - '0')
     {
-    case 0: over(); break;
-    case 1: getStu(); break;
-    case 2: addStu(); break;
-    case 3: delStu(); break;
-    case 4: getCou(); break;
-    case 5: addCou(); break;
-    case 6: delCou(); break;
-    default: {cout << "请重新输入" << endl; index(); }
+      case 0: over(); break;
+      case 1: getStu(); break;
+      case 2: addStu(); break;
+      case 3: delStu(); break;
+      case 4: getCou(); break;
+      case 5: addCou(); break;
+      case 6: delCou(); break;
+      default: { cout << "请重新输入" << endl; index(); }
     }
   }
 }
@@ -602,7 +612,6 @@ void Manager::login()
     {
       cout << "*";
       j++;
-
     }
     if (ch[0] == 'I' && ch[1] == 'P' && ch[2] == 'T')
     {
@@ -614,7 +623,7 @@ void Manager::login()
     else
     {
       cout << "密码错误" << endl;
-      over();
+      exit(0);
     }
   }
 }
