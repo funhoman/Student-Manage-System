@@ -196,13 +196,20 @@ void Manager::getStu()
 {
   string tmp;
   cout << "　　# 查 询 学 生 信 息 #" << endl;
-  cout << "输入要查询的学生学号：";
-  cin >> tmp;
-  if (search(tmp) != -1024)
-    cout << msa[search(tmp)];
-  else
-    cout << "ERROR: 错误的学号！" << endl;
-  back();
+  while (1)
+  {
+    cout << "输入要查询的学生学号：";
+    cin >> tmp;
+    if (search(tmp) != -1024)
+      cout << msa[search(tmp)] << endl;
+    else
+      cout << "ERROR: 错误的学号！" << endl;
+    cout << "要继续查询吗？(Y/N)";
+    char ipt;
+    cin >> ipt;
+    if (toupper(ipt) == 'N')
+      back();
+  }
 }
 void Manager::addStu()
 {
@@ -293,7 +300,7 @@ void Manager::getCou()
       {
         ctmpb[ctcount] = ctmpa[ctcount] = mca[i];
         cout << "课程编号：" << mca[i].getccid() << "  ";
-        cout << "课程名称：" << mca[i].getccid() << "  ";
+        cout << "课程名称：" << mca[i].getcname() << "  ";
         cout << "综合成绩：" << mca[i].getcsum() << "  ";
         cout << "实得学分：" << mca[i].getcpoint() << "  ";
         cout << endl;
@@ -328,42 +335,42 @@ void Manager::getCou()
       }
     switch (ipt - '0')
     {
-      case 1:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = 0; i < ctcount; i++)
-          cout << ctmpa[i] << endl;
-        back();
-      }
-      break;
-      case 2:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = ctcount - 1; i >= 0; i--)
-          cout << ctmpa[i] << endl;
-        back();
-      }
-      break;
-      case 3:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = 0; i < ctcount; i++)
-          cout << ctmpb[i] << endl;
-        back();
-      }
-      break;
-      case 4:
-      {
-        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-        for (i = ctcount - 1; i >= 0; i--)
-          cout << ctmpb[i] << endl;
-        back();
-      }
-      break;
-      default:
-      {
-        back();
-      }
+    case 1:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = 0; i < ctcount; i++)
+        cout << ctmpa[i] << endl;
+      back();
+    }
+    break;
+    case 2:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = ctcount - 1; i >= 0; i--)
+        cout << ctmpa[i] << endl;
+      back();
+    }
+    break;
+    case 3:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = 0; i < ctcount; i++)
+        cout << ctmpb[i] << endl;
+      back();
+    }
+    break;
+    case 4:
+    {
+      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+      for (i = ctcount - 1; i >= 0; i--)
+        cout << ctmpb[i] << endl;
+      back();
+    }
+    break;
+    default:
+    {
+      back();
+    }
     }
   }
 }
@@ -590,30 +597,40 @@ void Manager::index()
     cin >> ipt;
     switch (ipt - '0')
     {
-      case 0: over(); break;
-      case 1: getStu(); break;
-      case 2: addStu(); break;
-      case 3: delStu(); break;
-      case 4: getCou(); break;
-      case 5: addCou(); break;
-      case 6: delCou(); break;
-      default: { cout << "请重新输入" << endl; index(); }
+    case 0: over(); break;
+    case 1: getStu(); break;
+    case 2: addStu(); break;
+    case 3: delStu(); break;
+    case 4: getCou(); break;
+    case 5: addCou(); break;
+    case 6: delCou(); break;
+    default: { cout << "请重新输入" << endl; index(); }
     }
   }
 }
 void Manager::login()
 {
-  char ch[3];
+  char ch;
+  char pw[3];
   cout << "您未登录请先登录，\n";
   for (int i = 3, j = 0; i > 0; i--)
   {
     cout << "请输入密码：";
-    while ((ch[j] = toupper(getch())) != '\r')
+    while ((ch = toupper(getch())) != '\r')
     {
-      cout << "*";
-      j++;
+      if (ch == 8)
+      {
+        cout << "\b \b"; // Back & space
+        j--;
+      }
+      else
+      {
+        pw[j] = ch;
+        cout << "*";
+        j++;
+      }
     }
-    if (ch[0] == 'I' && ch[1] == 'P' && ch[2] == 'T')
+    if (pw[0] == 'I' && pw[1] == 'P' && pw[2] == 'T')
     {
       opf = 1;
       cout << endl << "登录成功！" << endl;
@@ -634,10 +651,12 @@ void Manager::over()
 }
 int Manager::search(string id)
 {
-  int i = 0;
-  while (msa[i].getssid() != id && i <= scount)
+  // Sequential search with sentry
+  int i = 0;  
+  msa[scount].setssid(id);
+  while (msa[i].getssid() != id)
     i++;
-  if (i > scount)
+  if (i == scount)
     return -1024;
   else
     return i;
