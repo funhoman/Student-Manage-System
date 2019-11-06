@@ -1,10 +1,6 @@
-English | [汉语文](https://github.com/funhoman/Student-Manage-System/edit/master/README_CN.md)
+English | [汉语文](https://github.com/funhoman/Student-Manage-System/blob/master/README_CN.md)
 
 # Student-Manage-System
-
----
-
-## Info
 
 Studnent manage system that be powered by C++ have 6 actions is a simple Program.
 
@@ -24,4 +20,4 @@ Studnent manage system that be powered by C++ have 6 actions is a simple Program
 
 ### Install
 
-Use `code.cpp` in Visual Studio 2017.
+Download and use `code.cpp` in Visual Studio 2017.
