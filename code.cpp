@@ -188,8 +188,8 @@ private:
   Student msa0;
   Course mca0;
   int opf;
-  const char *DIR_A = "C:\\download\\a.txt";
-  const char *DIR_B = "C:\\download\\b.txt";
+  char DIR_A[100] = "C:\\download\\a.txt";
+  char DIR_B[100] = "C:\\download\\b.txt";
 };
 // 用户函数
 void Manager::getStu()
@@ -456,11 +456,11 @@ void Manager::getFile()
   int i;
   ifstream ifs;
   // 文件 A
-  ifs.open(DIR_A);
+  ifs.open(DIR_A, ios::out | ios::trunc);
   if (!ifs)
   {
     cout << "error: cannot open the file!" << endl;
-    back();
+    exit(0);
   }
   string ssid, sname, sex, dorm, tel;
   ifs >> ssid >> sname >> sex >> dorm >> tel;
@@ -468,7 +468,7 @@ void Manager::getFile()
   {
     ifs >> ssid >> sname >> sex >> dorm >> tel;
     msa[i].setssid(ssid);
-    msa[i].setsname(sname);
+    msa[i].setsname(sname); 
     msa[i].setssex(sex);
     msa[i].setsdorm(dorm);
     msa[i].setstel(tel);
@@ -476,7 +476,7 @@ void Manager::getFile()
   scount = i - 1; // 多读一个换行符
   ifs.close();
   // 文件 B
-  ifs.open(DIR_B);
+  ifs.open(DIR_B, ios::out | ios::trunc);
   if (!ifs)
   {
     cout << "error: cannot open the file!" << endl;
@@ -517,7 +517,7 @@ void Manager::toFile()
   if (!ofs)
   {
     cout << "error: cannot open the file!" << endl;
-    back();
+    exit(0);
   }
   ofs << "学号  姓名  性别  宿舍号码  电话号码" << endl;
   for (int i = 0; i <= scount; i++)
@@ -634,6 +634,10 @@ void Manager::login()
     {
       opf = 1;
       cout << endl << "登录成功！" << endl;
+      cout << "请输入文件 A 地址：";
+      cin >> DIR_A;
+      cout << "请输入文件 B 地址：";
+      cin >> DIR_B;
       getFile();
       index();
     }
@@ -652,7 +656,7 @@ void Manager::over()
 int Manager::search(string id)
 {
   // Sequential search with sentry
-  int i = 0;  
+  int i = 0;
   msa[scount].setssid(id);
   while (msa[i].getssid() != id)
     i++;
