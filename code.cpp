@@ -204,7 +204,7 @@ void Manager::getStu()
       cout << msa[search(tmp)] << endl;
     else
       cout << "ERROR: 错误的学号！" << endl;
-    cout << "要继续查询吗？(Y/N)";
+    cout << "要继续查询吗？(Y)";
     char ipt;
     cin >> ipt;
     if (toupper(ipt) == 'N')
@@ -245,18 +245,22 @@ void Manager::delStu()
   {
     char ipt;
     cout << "  " << msa[search(tmp)] << endl;
-    cout << " 警 告：删除学生同时删除对应的成绩！\n 确认删除吗？";
+    cout << " 警 告：删除学生同时删除对应的成绩！\n 确认删除吗？(Y)";
     cin >> ipt;
     if (toupper(ipt) == 'Y')
     {
       // 删除基本信息
-      msa[search(tmp)] = msa0;
+      for (int i = search(tmp); i < scount; i++)
+      {
+        msa[i] = msa[i + 1];
+      }
       scount--;
       // 删除成绩信息
       for (int i = 0; i < ccount; i++)
         if (mca[i].getcsid() == tmp)
         {
-          mca[i] = mca0;
+          for (int j = i; j < ccount; j++)
+            mca[j] = mca[j + 1];
           ccount--;
         }
     }
@@ -335,42 +339,42 @@ void Manager::getCou()
       }
     switch (ipt - '0')
     {
-    case 1:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = 0; i < ctcount; i++)
-        cout << ctmpa[i] << endl;
-      back();
-    }
-    break;
-    case 2:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = ctcount - 1; i >= 0; i--)
-        cout << ctmpa[i] << endl;
-      back();
-    }
-    break;
-    case 3:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = 0; i < ctcount; i++)
-        cout << ctmpb[i] << endl;
-      back();
-    }
-    break;
-    case 4:
-    {
-      cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
-      for (i = ctcount - 1; i >= 0; i--)
-        cout << ctmpb[i] << endl;
-      back();
-    }
-    break;
-    default:
-    {
-      back();
-    }
+      case 1:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = 0; i < ctcount; i++)
+          cout << ctmpa[i] << endl;
+        back();
+      }
+      break;
+      case 2:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = ctcount - 1; i >= 0; i--)
+          cout << ctmpa[i] << endl;
+        back();
+      }
+      break;
+      case 3:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = 0; i < ctcount; i++)
+          cout << ctmpb[i] << endl;
+        back();
+      }
+      break;
+      case 4:
+      {
+        cout << "学生学号  课程编号  课程名  学分  平时成绩  实验成绩  考试成绩  总成绩  实得学分" << endl;
+        for (i = ctcount - 1; i >= 0; i--)
+          cout << ctmpb[i] << endl;
+        back();
+      }
+      break;
+      default:
+      {
+        back();
+      }
     }
   }
 }
@@ -414,7 +418,8 @@ void Manager::delCou()
       if (mca[i].getcsid() == tmp1 && mca[i].getccid() == tmp2)
       {
         cout << mca[i] << "  已删除！";
-        mca[i] = mca0;
+        for (int j = i; j < ccount; j++)
+          mca[j] = mca[j + 1];
         ccount--;
         back();
       }
@@ -456,7 +461,7 @@ void Manager::getFile()
   int i;
   ifstream ifs;
   // 文件 A
-  ifs.open(DIR_A, ios::out | ios::trunc);
+  ifs.open(DIR_A, ios::out);
   if (!ifs)
   {
     cout << "error: cannot open the file!" << endl;
@@ -468,7 +473,7 @@ void Manager::getFile()
   {
     ifs >> ssid >> sname >> sex >> dorm >> tel;
     msa[i].setssid(ssid);
-    msa[i].setsname(sname); 
+    msa[i].setsname(sname);
     msa[i].setssex(sex);
     msa[i].setsdorm(dorm);
     msa[i].setstel(tel);
@@ -476,11 +481,11 @@ void Manager::getFile()
   scount = i - 1; // 多读一个换行符
   ifs.close();
   // 文件 B
-  ifs.open(DIR_B, ios::out | ios::trunc);
+  ifs.open(DIR_B, ios::out);
   if (!ifs)
   {
     cout << "error: cannot open the file!" << endl;
-    back();
+    exit(0);
   }
   string csid, cid, name, credit, us, exp, test, sum, point;
   ifs >> csid >> cid >> name >> credit >> us >> exp >> test;
@@ -520,7 +525,7 @@ void Manager::toFile()
     exit(0);
   }
   ofs << "学号  姓名  性别  宿舍号码  电话号码" << endl;
-  for (int i = 0; i <= scount; i++)
+  for (int i = 0; i < scount; i++)
   {
     ofs << msa[i].getssid();
     ofs << "  ";
@@ -542,7 +547,7 @@ void Manager::toFile()
     back();
   }
   ofs << "学号  课程编号  课程名称  学分  平时成绩  实验成绩 考试成绩" << endl;
-  for (int i = 0; i <= ccount; i++)
+  for (int i = 0; i < ccount; i++)
   {
     ofs << mca[i].getcsid();
     ofs << "  ";
@@ -597,14 +602,14 @@ void Manager::index()
     cin >> ipt;
     switch (ipt - '0')
     {
-    case 0: over(); break;
-    case 1: getStu(); break;
-    case 2: addStu(); break;
-    case 3: delStu(); break;
-    case 4: getCou(); break;
-    case 5: addCou(); break;
-    case 6: delCou(); break;
-    default: { cout << "请重新输入" << endl; index(); }
+      case 0: over(); break;
+      case 1: getStu(); break;
+      case 2: addStu(); break;
+      case 3: delStu(); break;
+      case 4: getCou(); break;
+      case 5: addCou(); break;
+      case 6: delCou(); break;
+      default: { cout << "请重新输入" << endl; index(); }
     }
   }
 }
@@ -634,10 +639,15 @@ void Manager::login()
     {
       opf = 1;
       cout << endl << "登录成功！" << endl;
-      cout << "请输入文件 A 地址：";
-      cin >> DIR_A;
-      cout << "请输入文件 B 地址：";
-      cin >> DIR_B;
+      cout << "是否修改默认文件地址？(按 Y 修改)" << endl;
+      cout << "C:\\download\\a.txt, C:\\download\\b.txt" << endl;
+      if ((ch = toupper(getch())) == 'Y')
+      {
+        cout << "请输入文件 A 地址：";
+        cin >> DIR_A;
+        cout << "请输入文件 B 地址：";
+        cin >> DIR_B;
+      }
       getFile();
       index();
     }
